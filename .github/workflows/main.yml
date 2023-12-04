@@ -37,4 +37,4 @@ jobs:
         DISCORD_WEBHOOK_TEST: ${{ secrets. DISCORD_WEBHOOK_TEST }}
         DISCORD_WEBHOOK_URL_2: ${{ secrets. DISCORD_WEBHOOK_URL_2 }}
       run: |
-        python test.py
+        python main.py
