@@ -1,10 +1,11 @@
+import os
 import datetime
 import requests
 from googleapiclient.discovery import build
 
 # 這裡填入你的API金鑰和Discord Webhook URL
-YOUTUBE_API_KEY = ''
-DISCORD_WEBHOOK_URL = ''
+YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
+DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 
 # YouTube API客戶端
 youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
