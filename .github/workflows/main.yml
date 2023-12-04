@@ -2,7 +2,7 @@ name: YouTube Video Checker
 
 on:
   schedule:
-    - cron: '12 15 * * *'  # 每小時執行一次
+    - cron: '15 7 * * *'  # 每小時執行一次
 
 jobs:
   check_videos:
