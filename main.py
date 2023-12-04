@@ -11,7 +11,7 @@ DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_TEST')
 youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
 
 def check_videos(channel_id, keywords):
-    # 獲取頻道的最新視頻
+    # 獲取頻道的最新影片
     request = youtube.search().list(
         part="snippet",
         channelId=channel_id,
