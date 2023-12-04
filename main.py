@@ -20,9 +20,9 @@ async def on_ready():
     KEYWORDS = ['戰隊戰','超異域公主連結']
 
     for channel_id in CHANNEL_IDS:
-        check_videos(channel_id, KEYWORDS)
+        await check_videos(channel_id, KEYWORDS)
 
-def check_videos(channel_id, keywords):
+async def check_videos(channel_id, keywords):
     # 獲取頻道的最新視頻
     request = youtube.search().list(
         part="snippet",
@@ -40,9 +40,9 @@ def check_videos(channel_id, keywords):
 
         # 檢查視頻標題是否包含任何關鍵字
         if any(keyword.lower() in video_title.lower() for keyword in keywords):
-            post_to_discord(item['snippet']['channelTitle'], video_title, video_url)
+            await post_to_discord(item['snippet']['channelTitle'], video_title, video_url)
 
-def post_to_discord(channel_name, video_title, video_url):
+async def post_to_discord(channel_name, video_title, video_url):
     # 創建 Discord 文本消息
     message = f"新影片發布：{video_title}\n頻道：{channel_name}\n網址：{video_url}"
 
