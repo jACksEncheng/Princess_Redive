@@ -10,8 +10,8 @@ YOUTUBE_API_KEYS = {
 }
 
 DISCORD_WEBHOOK_URLS = {
-    'keyword1': os.getenv('DISCORD_WEBHOOK_URL'),
-    'keyword2': os.getenv('DISCORD_WEBHOOK_URL_2'),
+    '四階段一王': os.getenv('DISCORD_WEBHOOK_URL'),
+    '四階段二王': os.getenv('DISCORD_WEBHOOK_URL_2'),
     # 添加更多关键字和相应的Webhook URL
 }
 
@@ -30,7 +30,7 @@ def check_videos(channel_id, keywords):
             channelId=channel_id,
             order="date",
             type="video",
-            publishedAfter=(datetime.datetime.utcnow() - datetime.timedelta(days=8)).isoformat() + 'Z'
+            publishedAfter=(datetime.datetime.utcnow() - datetime.timedelta(days=15)).isoformat() + 'Z'
         )
         response = request.execute()
 
@@ -56,9 +56,9 @@ def post_to_discord(channel_name, video_title, video_url, keyword):
 
 # 填入要监控的 YouTube 频道 ID 和相应的关键字
 CHANNEL_KEYWORDS = {
-    'UCxH2mFGJOqJ15UyCiZ7rN9w': ['keyword1'],
-    'UCpI7QnTiStXbCB3_Qnx96Tg': ['keyword2'],
-    'UCvN59KwVSCv0KaAUuAYyUew': ['keyword1', 'keyword2'],
+    'UCxH2mFGJOqJ15UyCiZ7rN9w': ['四階段一王', '四階段二王'],
+    'UCpI7QnTiStXbCB3_Qnx96Tg': ['四階段一王', '四階段二王'],
+    'UCvN59KwVSCv0KaAUuAYyUew': ['四階段一王', '四階段二王'],
     # 添加更多频道和关键字
 }
 
