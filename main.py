@@ -1,14 +1,26 @@
 import os
 import datetime
-import requests
+import discord
 from googleapiclient.discovery import build
 
-# 這裡填入你的API金鑰和Discord Webhook URL
+# 這裡填入你的API金鑰和Discord Token
 YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
-DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
+DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
 # YouTube API客戶端
 youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
+
+client = discord.Client()
+
+@client.event
+async def on_ready():
+    print(f'Logged in as {client.user.name}')
+    # 這裡填入要監控的YouTube頻道ID和關鍵字
+    CHANNEL_IDS = ['UCxH2mFGJOqJ15UyCiZ7rN9w', 'UCpI7QnTiStXbCB3_Qnx96Tg']
+    KEYWORDS = ['戰隊戰','超異域公主連結']
+
+    for channel_id in CHANNEL_IDS:
+        check_videos(channel_id, KEYWORDS)
 
 def check_videos(channel_id, keywords):
     # 獲取頻道的最新視頻
@@ -31,15 +43,16 @@ def check_videos(channel_id, keywords):
             post_to_discord(item['snippet']['channelTitle'], video_title, video_url)
 
 def post_to_discord(channel_name, video_title, video_url):
-    # 將信息發送到Discord
-    data = {
-        "content": f"新影片發布：{video_title}\n頻道：{channel_name}\n網址：{video_url}"
-    }
-    requests.post(DISCORD_WEBHOOK_URL, data=data)
+    # 創建 Discord 文本消息
+    message = f"新影片發布：{video_title}\n頻道：{channel_name}\n網址：{video_url}"
 
-# 這裡填入要監控的YouTube頻道ID和關鍵字
-CHANNEL_IDS = ['UCxH2mFGJOqJ15UyCiZ7rN9w', 'UCpI7QnTiStXbCB3_Qnx96Tg']
-KEYWORDS = ['戰隊戰']
+    # 獲取您的 Discord 伺服器中的特定文本頻道
+    # 假設您有一個名為 "general" 的文本頻道
+    channel = client.get_channel(1156594677500354650)  # 將 YOUR_TEXT_CHANNEL_ID 替換為實際的文本頻道ID
 
-for channel_id in CHANNEL_IDS:
-    check_videos(channel_id, KEYWORDS)
+    # 發送消息到指定的文本頻道
+    if channel:
+        await channel.send(message)
+
+# 啟動 Discord 客戶端
+client.run(DISCORD_TOKEN)
