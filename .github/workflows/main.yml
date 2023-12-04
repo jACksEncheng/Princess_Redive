@@ -1,0 +1,29 @@
+name: YouTube Video Checker
+
+on:
+  schedule:
+    - cron: '0 5 * * *'  # 每小時執行一次
+
+jobs:
+  check_videos:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install requests google-api-python-client
+
+    - name: Run script
+      env:
+        YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      run: |
+        python main.py
