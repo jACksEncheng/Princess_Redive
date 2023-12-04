@@ -48,7 +48,7 @@ def post_to_discord(channel_name, video_title, video_url):
 
     # 獲取您的 Discord 伺服器中的特定文本頻道
     # 假設您有一個名為 "general" 的文本頻道
-    channel = client.get_channel(1156594677500354650)  # 將 YOUR_TEXT_CHANNEL_ID 替換為實際的文本頻道ID
+    channel = client.get_channel(997108672784236627)  # 將 YOUR_TEXT_CHANNEL_ID 替換為實際的文本頻道ID
 
     # 發送消息到指定的文本頻道
     if channel:
