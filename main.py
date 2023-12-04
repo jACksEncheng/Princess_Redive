@@ -3,8 +3,8 @@ import requests
 from googleapiclient.discovery import build
 
 # 這裡填入你的API金鑰和Discord Webhook URL
-YOUTUBE_API_KEY = 'AIzaSyCWcFvvbwZ6lnv3FZa9etT1lzpTrOaKs00'
-DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1168922301123801129/MzeeKTvG_wIQNLl9B8TtepkDsXInwAedNdu2E5BJw4fNLWgZ3ySRATbwRFgvnMntz-Cm'
+YOUTUBE_API_KEY = ''
+DISCORD_WEBHOOK_URL = ''
 
 # YouTube API客戶端
 youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
