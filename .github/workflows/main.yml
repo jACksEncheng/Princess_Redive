@@ -1,7 +1,8 @@
 name: YouTube Video Checker
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '8 8 * * *'  # 每小時執行一次
 
 jobs:
   check_videos:
