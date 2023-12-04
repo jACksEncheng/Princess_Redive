@@ -1,8 +1,7 @@
 name: YouTube Video Checker
 
 on:
-  schedule:
-    - cron: '*/2 * * * *'  # 每小時執行一次
+  workflow_dispatch:
 
 jobs:
   check_videos:
@@ -26,4 +25,4 @@ jobs:
         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
       run: |
-        python main.py
+        python your_script.py         
