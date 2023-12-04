@@ -22,7 +22,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install requests google-api-python-client discord,py
+        pip install requests google-api-python-client discord.py
 
     - name: Run script
       env:
