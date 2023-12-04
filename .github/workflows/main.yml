@@ -29,5 +29,6 @@ jobs:
         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        DISCORD_WEBHOOK_TEST: ${{ secrets. DISCORD_WEBHOOK_TEST }}
       run: |
         python main.py
