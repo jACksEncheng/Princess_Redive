@@ -51,7 +51,7 @@ def post_to_discord(channel_name, video_title, video_url, keyword):
         return
 
     data = {
-        "content": f"新影片发表：{video_title}\n频道：{channel_name}\n网址：{video_url}"
+        "content": f"新影片發表：{video_title}\n頻道：{channel_name}\n網址：{video_url}"
     }
     requests.post(webhook_url, data=data)
 
