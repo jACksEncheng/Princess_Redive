@@ -25,7 +25,7 @@ jobs:
 
     - name: Run Discord Bot Script
       env:
-        DISCORD_TOKEN: ${{ secrets.DISCORD_T }}
+        DISCORD_TOKEN: ${{ secrets.YOUTUBE_API_POOP }}
       run: |
         python discord_bot.py &
         sleep 1200
