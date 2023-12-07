@@ -1,0 +1,32 @@
+name: Run Discord Bot
+
+on:
+  schedule:
+     - cron: '10 16 * * *'
+
+  workflow_dispatch: {}
+
+jobs:
+  run-discord-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # 確保選擇適合您機器人腳本的 Python 版本
+
+    - name: Install dependencies
+      run: |
+        pip install discord.py
+
+    - name: Run Discord Bot Script
+      env:
+        DISCORD_TOKEN: ${{ secrets.DISCORD_T }}
+      run: |
+        python discord_bot.py &
+        sleep 1200
+        kill $!
