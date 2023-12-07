@@ -36,5 +36,6 @@ jobs:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         DISCORD_WEBHOOK_TEST: ${{ secrets. DISCORD_WEBHOOK_TEST }}
         DISCORD_WEBHOOK_URL_2: ${{ secrets. DISCORD_WEBHOOK_URL_2 }}
+        DISCORD_WEBHOOK_BC4: ${{ secrets. DISCORD_WEBHOOK_BC4 }}
       run: |
         python main.py
