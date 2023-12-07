@@ -1,3 +1,4 @@
+import os
 import discord
 
 # 這裡放你的機器人Token
