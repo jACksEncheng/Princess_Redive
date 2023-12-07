@@ -1,7 +1,7 @@
 import discord
 
 # 這裡放你的機器人Token
-TOKEN = os.getenv('YOUTUBE_API_POOP')
+TOKEN = os.getenv('DISCORD_TOKEN_BC4')
 
 # 設定意圖
 intents = discord.Intents.default()
