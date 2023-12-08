@@ -34,14 +34,14 @@ async def on_ready():
         print(f"無法找到頻道 {source_channel_id}。")
 
     # 同時在所有目標討論串發送一條訊息
-    for thread_id in KEYWORD_THREAD_MAP.values():
-        try:
-            thread = await client.fetch_channel(thread_id)
-            await thread.send("機器人已啟動並準備好監聽訊息！")
-        except discord.NotFound:
-            print(f"討論串 {thread_id} 未找到。")
-        except discord.Forbidden:
-            print(f"無權限發送訊息到討論串 {thread_id}。")
+    # for thread_id in KEYWORD_THREAD_MAP.values():
+    #     try:
+    #         thread = await client.fetch_channel(thread_id)
+    #         await thread.send("機器人已啟動並準備好監聽訊息！")
+    #     except discord.NotFound:
+    #         print(f"討論串 {thread_id} 未找到。")
+    #     except discord.Forbidden:
+    #         print(f"無權限發送訊息到討論串 {thread_id}。")
 
 @client.event
 async def on_message(message):
