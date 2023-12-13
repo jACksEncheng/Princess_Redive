@@ -46,7 +46,9 @@ def check_videos(channel_id, keywords):
 def post_to_discord(channel_name, video_title, video_url, video_description):
     # 定義一個包含不需要的字串的列表
     unwanted_strings = ["隊伍來源：日版影片", "公主連結台版戰隊戰作業群：", "會有人幫忙貼戰隊戰作業","也可在戰隊戰期間問作業問題","裡面有補償刀文字軸秒數轉換機器人可以使用","平時也歡迎各位過來閒聊","==================="
-                       ,"https://youtu.be/Odrce0CBqYE","https://youtu.be/bU-EzqD4eR8","https://discord.gg/VFbFf9QeXY"]
+                       ,"https://youtu.be/Odrce0CBqYE","https://youtu.be/bU-EzqD4eR8","https://discord.gg/VFbFf9QeXY","==================","目前台版角色推薦星數/RANK :https://docs.google.com/spreadsheets/d/1KCUY8o77sR0llFn1aTBaM-q6YuiBM5E73HwqPbeKVAw/edit#gid=1483537175"
+                       ,"介紹單機遊戲的副頻道:http://www.youtube.com/c/煌靈的副頻道","FB粉絲團:https://www.facebook.com/%E7%85%8C%E9%9D%88longtimenoc-109066521597298","我目前使用的NORD VPN:https://nordvpn.com/longtimenoc","專屬折扣券: longtimenoc"
+                       ,"推薦玩公主連結的模擬器:BS5","下載連結:https://bstk.me/owTWv5GFy","本頻道影片請勿轉載至其他影片網站，謝謝","DISCORD歡樂觀眾聊天群:https://discord.gg/kAwDuM5","合作信箱:D878749122@gmail.com"]
 
     # 遍歷列表並從描述中移除這些字串
     filtered_description = video_description
