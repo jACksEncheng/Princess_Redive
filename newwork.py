@@ -17,7 +17,7 @@ client = discord.Client(intents=intents)
 source_channel_id = 997108672784236627  # 頻道A的ID
 
 # 設定需要建立討論串的關鍵字列表
-keywords_to_track = ['TAL', '煌靈', 'Jㄍ']
+keywords_to_track = ['TAL', '煌靈', '終將']
 
 @client.event
 async def on_ready():
