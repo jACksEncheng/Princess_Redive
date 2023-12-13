@@ -5,7 +5,7 @@ from googleapiclient.discovery import build
 
 # 這裡填入你的API金鑰和Discord Webhook URL
 YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
-DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
+DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_TEST')
 
 # YouTube API客戶端
 youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
@@ -27,7 +27,7 @@ def check_videos(channel_id, keywords):
         channelId=channel_id,
         order="date",
         type="video",
-        publishedAfter=(datetime.datetime.utcnow() - datetime.timedelta(days=7)).isoformat() + 'Z'
+        publishedAfter=(datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=7)).isoformat()
     )
     response = request.execute()
 
@@ -44,15 +44,23 @@ def check_videos(channel_id, keywords):
             post_to_discord(item['snippet']['channelTitle'], video_title, video_url, video_description)
 
 def post_to_discord(channel_name, video_title, video_url, video_description):
+    # 定義一個包含不需要的字串的列表
+    unwanted_strings = ["不要顯示的文字1", "不要顯示的文字2", "不要顯示的文字3"]
+
+    # 遍歷列表並從描述中移除這些字串
+    filtered_description = video_description
+    for unwanted in unwanted_strings:
+        filtered_description = filtered_description.replace(unwanted, "")
+
     # 將信息發送到Discord
     data = {
-        "content": f"新影片發布：{video_title}\n頻道：{channel_name}\n網址：{video_url}\n描述：{video_description}"
+        "content": f"新影片發布：{video_title}\n頻道：{channel_name}\n網址：{video_url}\n描述：{filtered_description}"
     }
     requests.post(DISCORD_WEBHOOK_URL, data=data)
 
 # 這裡填入要監控的YouTube頻道ID和關鍵字
 CHANNEL_IDS = ['UCxH2mFGJOqJ15UyCiZ7rN9w', 'UCpI7QnTiStXbCB3_Qnx96Tg','UCvN59KwVSCv0KaAUuAYyUew']
-KEYWORDS = ['戰隊戰','公主']
+KEYWORDS = ['戰隊戰']
 
 for channel_id in CHANNEL_IDS:
     check_videos(channel_id, KEYWORDS)
