@@ -14,7 +14,7 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 # 設定要監聽的頻道ID
-source_channel_id = 997108672784236627  # 頻道A的ID
+source_channel_id = 997108672784236627  # 請會長新開頻道
 
 # 設定需要建立討論串的關鍵字列表
 keywords_to_track = ['TAL', '煌靈', '終將']
