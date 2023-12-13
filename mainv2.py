@@ -55,6 +55,9 @@ def post_to_discord(channel_name, video_title, video_url, video_description):
     for unwanted in unwanted_strings:
         filtered_description = filtered_description.replace(unwanted, "")
 
+    # 為 URL 添加尖括號以取消網址預覽
+    video_url_with_no_preview = f"<{video_url}>"
+
     # 將信息發送到Discord
     data = {
         "content": f"新影片發布：{video_title}\n頻道：{channel_name}\n網址：{video_url}\n描述：{filtered_description}"
