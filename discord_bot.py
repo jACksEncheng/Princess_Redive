@@ -21,17 +21,17 @@ KEYWORD_THREAD_MAP = {
 }
 
 # 設定要監聽的頻道ID
-source_channel_id = 823212390480085065  # 頻道A的ID
+source_channel_id = 1156594677500354650  # 頻道A的ID
 
 @client.event
 async def on_ready():
     print(f'Logged in as {client.user}')
     # 機器人啟動後，在監聽頻道發送一條訊息
     channel = client.get_channel(source_channel_id)
-    # if channel:
-    #     await channel.send("機器人已啟動並準備好監聽訊息！")
-    # else:
-    #     print(f"無法找到頻道 {source_channel_id}。")
+    if channel:
+        await channel.send("機器人已啟動並準備好監聽訊息！")
+    else:
+        print(f"無法找到頻道 {source_channel_id}。")
 
     # 同時在所有目標討論串發送一條訊息
     # for thread_id in KEYWORD_THREAD_MAP.values():
