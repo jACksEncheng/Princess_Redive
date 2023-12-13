@@ -60,7 +60,7 @@ def post_to_discord(channel_name, video_title, video_url, video_description):
 
 # 這裡填入要監控的YouTube頻道ID和關鍵字
 CHANNEL_IDS = ['UCxH2mFGJOqJ15UyCiZ7rN9w', 'UCpI7QnTiStXbCB3_Qnx96Tg','UCvN59KwVSCv0KaAUuAYyUew']
-KEYWORDS = ['戰隊戰','戰隊戰']
+KEYWORDS = ['戰隊戰','公主']
 
 for channel_id in CHANNEL_IDS:
     check_videos(channel_id, KEYWORDS)
