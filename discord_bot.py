@@ -23,11 +23,11 @@ async def on_ready():
     # 機器人啟動後，在監聽頻道發送一條訊息
     channel = client.get_channel(source_channel_id)
     if channel:
-        await channel.send("機器人已啟動並準備好監聽訊息！")
+        await channel.send("機器人已啟動！")
     else:
         print(f"無法找到頻道 {source_channel_id}。")
     if channel:
-        await channel.send("機器人已啟動並準備好監聽訊息！")
+        await channel.send("機器人已啟動！")
     else:
         print(f"無法找到頻道 {source_channel_id}。")
 
@@ -35,7 +35,7 @@ async def on_ready():
     for thread_id in KEYWORD_THREAD_MAP.values():
         try:
             thread = await client.fetch_channel(thread_id)
-            await thread.send("機器人已啟動並準備好監聽訊息！")
+            await thread.send("機器人已啟動！")
         except discord.NotFound:
             print(f"討論串 {thread_id} 未找到。")
         except discord.Forbidden:
