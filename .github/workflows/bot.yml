@@ -27,6 +27,6 @@ jobs:
       env:
         DISCORD_TOKEN_BC4: ${{ secrets.DISCORD_TOKEN_BC4 }}
       run: |
-        python discord_bot.py &
+        python newwork.py &
         sleep 1200
         kill $!
