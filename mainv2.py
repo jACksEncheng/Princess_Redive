@@ -5,10 +5,20 @@ from googleapiclient.discovery import build
 
 # 這裡填入你的API金鑰和Discord Webhook URL
 YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
-DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
+DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_TEST')
 
 # YouTube API客戶端
 youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
+
+def get_full_video_description(video_id):
+    # 使用videos().list方法獲取完整的資訊欄文字
+    video_request = youtube.videos().list(
+        part="snippet",
+        id=video_id
+    )
+    video_response = video_request.execute()
+    description = video_response.get('items', [])[0]['snippet']['description']
+    return description
 
 def check_videos(channel_id, keywords):
     # 獲取頻道的最新影片
@@ -25,7 +35,9 @@ def check_videos(channel_id, keywords):
         video_title = item['snippet']['title']
         video_id = item['id']['videoId']
         video_url = f"https://www.youtube.com/watch?v={video_id}"
-        video_description = item['snippet']['description']  # 添加視頻描述
+        
+        # 獲取完整的資訊欄文字
+        video_description = get_full_video_description(video_id)
 
         # 檢查視頻標題是否包含任何關鍵字
         if any(keyword.lower() in video_title.lower() for keyword in keywords):
@@ -40,7 +52,7 @@ def post_to_discord(channel_name, video_title, video_url, video_description):
 
 # 這裡填入要監控的YouTube頻道ID和關鍵字
 CHANNEL_IDS = ['UCxH2mFGJOqJ15UyCiZ7rN9w', 'UCpI7QnTiStXbCB3_Qnx96Tg','UCvN59KwVSCv0KaAUuAYyUew']
-KEYWORDS = ['戰隊戰','公主']
+KEYWORDS = ['戰隊戰']
 
 for channel_id in CHANNEL_IDS:
     check_videos(channel_id, KEYWORDS)
