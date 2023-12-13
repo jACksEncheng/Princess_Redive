@@ -5,7 +5,7 @@ from googleapiclient.discovery import build
 
 # 這裡填入你的API金鑰和Discord Webhook URL
 YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
-DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_TEST')
+DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 
 # YouTube API客戶端
 youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
@@ -45,15 +45,7 @@ def check_videos(channel_id, keywords):
 
 def post_to_discord(channel_name, video_title, video_url, video_description):
     # 定義一個包含不需要的字串的列表
-    unwanted_strings = ["隊伍來源：日版影片
-https://youtu.be/Odrce0CBqYE
-https://youtu.be/bU-EzqD4eR8
-=====================================
-公主連結台版戰隊戰作業群：https://discord.gg/VFbFf9QeXY
-會有人幫忙貼戰隊戰作業
-也可在戰隊戰期間問作業問題
-裡面有補償刀文字軸秒數轉換機器人可以使用
-平時也歡迎各位過來閒聊", "不要顯示的文字2", "不要顯示的文字3"]
+    unwanted_strings = ["隊伍來源：日版影片https://youtu.be/Odrce0CBqYE https://youtu.be/bU-EzqD4eR8 公主連結台版戰隊戰作業群：https://discord.gg/VFbFf9QeXY 會有人幫忙貼戰隊戰作業 也可在戰隊戰期間問作業問題 裡面有補償刀文字軸秒數轉換機器人可以使用平時也歡迎各位過來閒聊", "不要顯示的文字2", "不要顯示的文字3"]
 
     # 遍歷列表並從描述中移除這些字串
     filtered_description = video_description
@@ -68,7 +60,7 @@ https://youtu.be/bU-EzqD4eR8
 
 # 這裡填入要監控的YouTube頻道ID和關鍵字
 CHANNEL_IDS = ['UCxH2mFGJOqJ15UyCiZ7rN9w', 'UCpI7QnTiStXbCB3_Qnx96Tg','UCvN59KwVSCv0KaAUuAYyUew']
-KEYWORDS = ['戰隊戰']
+KEYWORDS = ['戰隊戰','戰隊戰']
 
 for channel_id in CHANNEL_IDS:
     check_videos(channel_id, KEYWORDS)
