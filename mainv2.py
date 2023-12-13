@@ -58,7 +58,7 @@ def post_to_discord(channel_name, video_title, video_url, video_description):
         filtered_description = filtered_description.replace(unwanted, "")
 
     # 為 URL 添加尖括號以取消網址預覽
-    video_url_with_no_preview = f"<{video_url}>"
+    video_url_with_no_preview = f" <{video_url}> "
 
     # 將信息發送到Discord
     data = {
