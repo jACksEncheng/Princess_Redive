@@ -31,7 +31,7 @@ async def on_ready():
     else:
         print(f"無法找到頻道 {source_channel_id}。")
 
-    同時在所有目標討論串發送一條訊息
+    # 同時在所有目標討論串發送一條訊息
     for thread_id in KEYWORD_THREAD_MAP.values():
         try:
             thread = await client.fetch_channel(thread_id)
