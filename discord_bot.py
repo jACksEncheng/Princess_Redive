@@ -11,12 +11,13 @@ intents.message_content = True #確保機器人能接收消息內容
 client = discord.Client(intents=intents)
 # 關鍵字到討論串ID的映射
 KEYWORD_THREAD_MAP = {
-    'apple': 1184316792303271936,  # 討論串A的ID
-    '煌靈': 1168932902877278210,  # 討論串B的ID
+    'TAL': 1168932953729015968,  # 討論串A的ID
+    '煌靈': 1168932902877278210,
+    'Jㄍ': 1168933002806579302, # 討論串B的ID
     # 可以繼續添加更多關鍵字和討論串ID
 }
 # 設定要監聽的頻道ID
-source_channel_id = 1156594677500354650  # 頻道A的ID
+source_channel_id = 823212390480085065  # 頻道A的ID
 @client.event
 async def on_ready():
     print(f'Logged in as {client.user}')
@@ -26,10 +27,10 @@ async def on_ready():
         await channel.send("機器人已啟動！")
     else:
         print(f"無法找到頻道 {source_channel_id}。")
-    if channel:
-        await channel.send("機器人已啟動！")
-    else:
-        print(f"無法找到頻道 {source_channel_id}。")
+    # if channel:
+    #     await channel.send("機器人已啟動！")
+    # else:
+    #     print(f"無法找到頻道 {source_channel_id}。")
 
     # 同時在所有目標討論串發送一條訊息
     for thread_id in KEYWORD_THREAD_MAP.values():
