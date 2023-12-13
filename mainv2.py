@@ -45,10 +45,7 @@ def check_videos(channel_id, keywords):
 
 def post_to_discord(channel_name, video_title, video_url, video_description):
     # 定義一個包含不需要的字串的列表
-    unwanted_strings = ["公主連結台版戰隊戰作業群：", "會有人幫忙貼戰隊戰作業","也可在戰隊戰期間問作業問題","裡面有補償刀文字軸秒數轉換機器人可以使用","平時也歡迎各位過來閒聊","==================="
-                       ,"https://discord.gg/VFbFf9QeXY","==================","目前台版角色推薦星數/RANK :https://docs.google.com/spreadsheets/d/1KCUY8o77sR0llFn1aTBaM-q6YuiBM5E73HwqPbeKVAw/edit#gid=1483537175"
-                       ,"介紹單機遊戲的副頻道:http://www.youtube.com/c/煌靈的副頻道","FB粉絲團:https://www.facebook.com/%E7%85%8C%E9%9D%88longtimenoc-109066521597298","我目前使用的NORD VPN:https://nordvpn.com/longtimenoc","專屬折扣券: longtimenoc"
-                       ,"推薦玩公主連結的模擬器:BS5","下載連結:https://bstk.me/owTWv5GFy","本頻道影片請勿轉載至其他影片網站，謝謝","DISCORD歡樂觀眾聊天群:https://discord.gg/kAwDuM5","合作信箱:D878749122@gmail.com"]
+    unwanted_strings = ["公主連結台版戰隊戰作業群：", "會有人幫忙貼戰隊戰作業", "也可在戰隊戰期間問作業問題", "裡面有補償刀文字軸秒數轉換機器人可以使用", "平時也歡迎各位過來閒聊", "===================", "https://discord.gg/VFbFf9QeXY", "==================", "目前台版角色推薦星數/RANK :https://docs.google.com/spreadsheets/d/1KCUY8o77sR0llFn1aTBaM-q6YuiBM5E73HwqPbeKVAw/edit#gid=1483537175", "介紹單機遊戲的副頻道:http://www.youtube.com/c/煌靈的副頻道", "FB粉絲團:https://www.facebook.com/%E7%85%8C%E9%9D%88longtimenoc-109066521597298", "我目前使用的NORD VPN:https://nordvpn.com/longtimenoc", "專屬折扣券: longtimenoc", "推薦玩公主連結的模擬器:BS5", "下載連結:https://bstk.me/owTWv5GFy", "本頻道影片請勿轉載至其他影片網站，謝謝", "DISCORD歡樂觀眾聊天群:https://discord.gg/kAwDuM5", "合作信箱:D878749122@gmail.com"]
 
     # 遍歷列表並從描述中移除這些字串
     filtered_description = video_description
@@ -60,7 +57,7 @@ def post_to_discord(channel_name, video_title, video_url, video_description):
 
     # 將信息發送到Discord
     data = {
-        "content": f"新影片發布：{video_title}\n頻道：{channel_name}\n網址：{video_url}\n描述：{filtered_description}"
+        "content": f"新影片發布：{video_title}\n頻道：{channel_name}\n網址：{video_url_with_no_preview}\n描述：{filtered_description}"
     }
     requests.post(DISCORD_WEBHOOK_URL, data=data)
 
@@ -70,3 +67,6 @@ KEYWORDS = ['戰隊戰','公主']
 
 for channel_id in CHANNEL_IDS:
     check_videos(channel_id, KEYWORDS)
+```
+
+這個腳本會檢查指定YouTube頻道在最近三天內是否發布了包含特定關鍵字的影片。如果是，它會將影片的標題、頻道名稱、URL（不生成預覽）和過濾後的資訊欄文字發送到指定的 Discord Webhook URL。在 `post_to_discord` 函數中，我們過濾掉了 `unwanted_strings` 列表中的所有字串，並將 URL 包裹在尖括號中以取消網址預覽。
