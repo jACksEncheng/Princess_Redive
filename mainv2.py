@@ -27,7 +27,7 @@ def check_videos(channel_id, keywords):
         channelId=channel_id,
         order="date",
         type="video",
-        publishedAfter=(datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=3)).isoformat()
+        publishedAfter=(datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=1)).isoformat()
     )
     response = request.execute()
 
