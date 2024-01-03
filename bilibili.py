@@ -12,7 +12,8 @@ async def check_videos(up_ids, keywords):
 
     for keyword in keywords:
         # 使用关键字搜索视频
-        search_result = await video.get_info(keyword, search_type="video", publish_time_from=days_ago)
+        v = video.Video(UP_IDS)
+        search_result = await v.get_info(keyword, search_type="video", publish_time_from=days_ago)
 
         for item in search_result['result']:
             video_title = item['title']
