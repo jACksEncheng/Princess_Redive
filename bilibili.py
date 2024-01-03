@@ -34,7 +34,7 @@ def post_to_discord(channel_name, video_title, video_url):
     requests.post(DISCORD_WEBHOOK_URL, data=data)
 
 # 这里填入要监控的 UP 主 ID 和关键字
-UP_IDS = 'SVKAXsW' # 示例 UP 主 ID
+UP_IDS = 'BV16C4y1378y' # 示例 UP 主 ID
 KEYWORDS = ['戰隊戰']
 
 # 主函数
