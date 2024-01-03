@@ -25,7 +25,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: '3.8'
 
     - name: Install system dependencies
       run: |
@@ -35,8 +35,10 @@ jobs:
 
     - name: Install Python dependencies
       run: |
+        pip install cython
         pip install requests google-api-python-client discord.py
         pip install bilibili_api requests
+        
 
     - name: Run script
       env:
