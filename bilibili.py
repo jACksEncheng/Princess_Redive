@@ -8,10 +8,8 @@ from datetime import datetime, timezone, timedelta
 # Discord Webhook URL
 webhook_url = os.getenv('DISCORD_WEBHOOK_URL')  # 請將此處替換為您的 Discord Webhook URL
 
-# Bilibili 用戶的 UID
-uid = 33383193  # 請將此處替換為實際的 UID
-
-u = user.User(uid=uid)
+# Bilibili 用戶的 UID 列表
+uids = [33383193, 3254764]  # 請將這些數字替換為實際的 UID
 
 def getVideoItem(input, timestamp):
     item = {}
@@ -22,7 +20,7 @@ def getVideoItem(input, timestamp):
         item["url"] = f"https://www.bilibili.com/video/av{aid}"
     # 將 timestamp 轉換為台灣時間（UTC+8）
     dt = datetime.fromtimestamp(timestamp, tz=timezone(timedelta(hours=8)))
-    item["timestamp"] = dt.strftime('%Y-%m-%d %H:%M:%S')  # 格式化時間
+    item["timestamp"] = dt.strftime('%Y-%m-%d %H:%M:%S')
     return item
 
 def cardToObj(card_data):
@@ -34,9 +32,9 @@ async def send_to_discord(cardObj):
     if cardObj:
         async with aiohttp.ClientSession() as session:
             discord_message = {
-                "content": f"標題: {cardObj.get('title', 'No Title')}\n"
-                           f"影片網址: {cardObj.get('url', 'No URL')}\n"
-                           f"上傳時間: {cardObj.get('timestamp', 'No Timestamp')}"
+                "content": f"Title: {cardObj.get('title', 'No Title')}\n"
+                           f"URL: {cardObj.get('url', 'No URL')}\n"
+                           f"Timestamp: {cardObj.get('timestamp', 'No Timestamp')}"
             }
             response = await session.post(webhook_url, json=discord_message)
             if response.status == 200:
@@ -44,13 +42,14 @@ async def send_to_discord(cardObj):
             else:
                 print(f"Failed to send message: {response.status} {response.reason}")
 
-async def main():
+async def fetch_dynamics(uid):
+    user_obj = user.User(uid=uid)
     offset = 0
     max_posts = 3
     count = 0
     keyword = "公主连结"
     while True:
-        res = await u.get_dynamics(offset)
+        res = await user_obj.get_dynamics(offset)
         if res["has_more"] != 1 or count >= max_posts:
             break
         offset = res["next_offset"]
@@ -62,6 +61,10 @@ async def main():
                 await send_to_discord(cardObj)
                 count += 1
         await asyncio.sleep(1)
+
+async def main():
+    tasks = [fetch_dynamics(uid) for uid in uids]
+    await asyncio.gather(*tasks)
 
 if __name__ == '__main__':
     asyncio.get_event_loop().run_until_complete(main())
