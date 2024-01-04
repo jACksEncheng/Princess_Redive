@@ -1,13 +1,14 @@
+import os
 import asyncio
 import json
 from bilibili_api import user
 import aiohttp
 
 # Discord Webhook URL
-webhook_url = '你的Webhook URL'  # 請將此處替換為您的 Discord Webhook URL
+webhook_url = os.getenv('DISCORD_WEBHOOK_URL')  # 請將此處替換為您的 Discord Webhook URL
 
 # Bilibili 用戶的 UID
-uid = 12345678  # 請將此處替換為實際的 UID
+uid = 33383193  # 請將此處替換為實際的 UID
 
 u = user.User(uid=uid)
 
