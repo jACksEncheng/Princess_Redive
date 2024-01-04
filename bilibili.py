@@ -4,7 +4,6 @@ import json
 from bilibili_api import user
 import aiohttp
 
-
 # Discord Webhook URL
 webhook_url = os.getenv('DISCORD_WEBHOOK_URL')  # 請將此處替換為您的 Discord Webhook URL
 
@@ -32,10 +31,11 @@ def cardToObj(input):
 async def send_to_discord(cardObj):
     if cardObj:  # 只有當 cardObj 不是空字典時才發送
         async with aiohttp.ClientSession() as session:
-            webhook_message = {
-                "content": json.dumps(cardObj, ensure_ascii=False)
-            }
-            await session.post(webhook_url, json=webhook_message)
+            response = await session.post(webhook_url, json=cardObj)
+            if response.status == 200:
+                print("Message sent successfully")
+            else:
+                print("Failed to send message:", response.status)
 
 async def main():
     offset = 0
