@@ -31,11 +31,16 @@ def cardToObj(input):
 async def send_to_discord(cardObj):
     if cardObj:  # 只有當 cardObj 不是空字典時才發送
         async with aiohttp.ClientSession() as session:
-            response = await session.post(webhook_url, json=cardObj)
+            # 包裹消息內容
+            discord_message = {
+                "content": f"Title: {cardObj.get('title', 'No Title')}\n"
+                           f"URL: {cardObj.get('url', 'No URL')}"
+            }
+            response = await session.post(webhook_url, json=discord_message)
             if response.status == 200:
                 print("Message sent successfully")
             else:
-                print("Failed to send message:", response.status)
+                print(f"Failed to send message: {response.status} {response.reason}")
 
 async def main():
     offset = 0
