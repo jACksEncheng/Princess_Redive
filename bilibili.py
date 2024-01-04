@@ -1,45 +1,75 @@
 import asyncio
-import requests
-from bilibili_api import video, sync
-from datetime import datetime, timedelta
+import json
+from bilibili_api import user
+import aiohttp
 
 # Discord Webhook URL
-DISCORD_WEBHOOK_URL = None
+webhook_url = '你的Webhook URL'  # 請將此處替換為您的 Discord Webhook URL
 
-async def check_videos(up_ids, keywords):
-    # 计算N天前的日期
-    days_ago = datetime.now() - timedelta(days=14)
+# Bilibili 用戶的 UID
+uid = 12345678  # 請將此處替換為實際的 UID
 
-    for keyword in keywords:
-        # 使用关键字搜索视频
-        v = video.Video(UP_IDS)
-        search_result = await v.get_info(keyword, search_type="video", publish_time_from=days_ago)
+u = user.User(uid=uid)
 
-        for item in search_result['result']:
-            video_title = item['title']
-            up_id = item['author_mid']
-            video_url = f"https://www.bilibili.com/video/{item['bvid']}"
+def copyKeys(src, keys):
+    res = {}
+    for k in keys:
+        if k in src:
+            res[k] = src[k]
+    return res
 
-            # 检查视频是否来自指定的 UP 主
-            if str(up_id) in up_ids:
-                post_to_discord(item['author'], video_title, video_url)
+def getItem(input):
+    if "item" in input:
+        return getItem(input["item"])
+    if "videos" in input:
+        return getVideoItem(input)
+    else:
+        return getNormal(input)
 
-def post_to_discord(channel_name, video_title, video_url):
-    global DISCORD_WEBHOOK_URL
-    if DISCORD_WEBHOOK_URL is None:
-        DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_TEST')
-    data = {
-        "content": f"新影片發布：{video_title}\n頻道：{channel_name}\n網址：{video_url}"
+def getNormal(input):
+    res = copyKeys(input, ['description', 'pictures', 'content'])
+    if "pictures" in res:
+        res["pictures"] = [pic["img_src"] for pic in res["pictures"]]
+    return res
+
+def getVideoItem(input):
+    res = copyKeys(input, ['title', 'desc', 'dynamic', 'short_link', 'stat', 'tname'])
+    res["av"] = input["aid"]
+    res["pictures"] = [input["pic"]]
+    return res
+
+def cardToObj(input):
+    res = {
+        "dynamic_id": input["desc"]["dynamic_id"],
+        "timestamp": input["desc"]["timestamp"],
+        "type": input["desc"]["type"],
+        "item": getItem(input["card"])
     }
-    requests.post(DISCORD_WEBHOOK_URL, data=data)
+    if "origin" in input["card"]:
+        originObj = json.loads(input["card"]["origin"])
+        res["origin"] = getItem(originObj)
+        if "user" in originObj and "name" in originObj["user"]:
+            res["origin_user"] = originObj["user"]["name"]
+    return res
 
-# 这里填入要监控的 UP 主 ID 和关键字
-UP_IDS = 'BV16C4y1378y' # 示例 UP 主 ID
-KEYWORDS = ['戰隊戰']
+async def send_to_discord(cardObj):
+    async with aiohttp.ClientSession() as session:
+        webhook_message = {
+            "content": json.dumps(cardObj, ensure_ascii=False)
+        }
+        await session.post(webhook_url, json=webhook_message)
 
-# 主函数
-def main():
-    asyncio.run(check_videos(UP_IDS, KEYWORDS))
+async def main():
+    offset = 0
+    while True:
+        res = await u.get_dynamics(offset)
+        if res["has_more"] != 1:
+            break
+        offset = res["next_offset"]
+        for card in res["cards"]:
+            cardObj = cardToObj(card)
+            await send_to_discord(cardObj)
+        await asyncio.sleep(1)
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    asyncio.get_event_loop().run_until_complete(main())
