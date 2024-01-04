@@ -4,6 +4,7 @@ import json
 from bilibili_api import user
 import aiohttp
 
+
 # Discord Webhook URL
 webhook_url = os.getenv('DISCORD_WEBHOOK_URL')  # 請將此處替換為您的 Discord Webhook URL
 
@@ -16,8 +17,9 @@ def getVideoItem(input):
     item = {}
     if input.get("title"):
         item["title"] = input["title"]
-    if input.get("aid"):
-        item["aid"] = input["aid"]
+    if aid := input.get("aid"):
+        item["aid"] = aid
+        item["url"] = f"https://www.bilibili.com/video/av{aid}"
     return item
 
 def cardToObj(input):
