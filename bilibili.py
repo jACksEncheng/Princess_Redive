@@ -3,6 +3,7 @@ import asyncio
 import json
 from bilibili_api import user
 import aiohttp
+from datetime import datetime, timezone, timedelta
 
 # Discord Webhook URL
 webhook_url = os.getenv('DISCORD_WEBHOOK_URL')  # 請將此處替換為您的 Discord Webhook URL
@@ -16,16 +17,17 @@ def getVideoItem(input, timestamp):
     item = {}
     if input.get("title"):
         item["title"] = input["title"]
-    # 移除 desc
     if aid := input.get("aid"):
         item["aid"] = aid
         item["url"] = f"https://www.bilibili.com/video/av{aid}"
-    item["timestamp"] = timestamp  # 添加 timestamp
+    # 將 timestamp 轉換為台灣時間（UTC+8）
+    dt = datetime.fromtimestamp(timestamp, tz=timezone(timedelta(hours=8)))
+    item["timestamp"] = dt.strftime('%Y-%m-%d %H:%M:%S')  # 格式化時間
     return item
 
 def cardToObj(card_data):
     card = json.loads(card_data["card"]) if isinstance(card_data["card"], str) else card_data["card"]
-    timestamp = card_data["desc"]["timestamp"]  # 從 API 數據中提取 timestamp
+    timestamp = card_data["desc"]["timestamp"]
     return getVideoItem(card, timestamp)
 
 async def send_to_discord(cardObj):
@@ -33,7 +35,7 @@ async def send_to_discord(cardObj):
         async with aiohttp.ClientSession() as session:
             discord_message = {
                 "content": f"標題: {cardObj.get('title', 'No Title')}\n"
-                           f"網址: {cardObj.get('url', 'No URL')}\n"
+                           f"影片網址: {cardObj.get('url', 'No URL')}\n"
                            f"上傳時間: {cardObj.get('timestamp', 'No Timestamp')}"
             }
             response = await session.post(webhook_url, json=discord_message)
