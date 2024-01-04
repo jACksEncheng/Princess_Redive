@@ -32,8 +32,10 @@ def cardToObj(input):
 async def send_to_discord(cardObj):
     if cardObj:  # 只有當 cardObj 不是空字典時才發送
         async with aiohttp.ClientSession() as session:
-            # 直接發送字典對象，而不是序列化後的字符串
-            await session.post(webhook_url, json=cardObj)
+            webhook_message = {
+                "content": json.dumps(cardObj, ensure_ascii=False)
+            }
+            await session.post(webhook_url, json=webhook_message)
 
 async def main():
     offset = 0
