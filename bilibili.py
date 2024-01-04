@@ -13,10 +13,12 @@ uid = 33383193  # 請將此處替換為實際的 UID
 u = user.User(uid=uid)
 
 def getVideoItem(input):
-    return {
-        "title": input.get("title", ""),
-        "aid": input.get("aid", "")
-    }
+    item = {}
+    if input.get("title"):
+        item["title"] = input["title"]
+    if input.get("aid"):
+        item["aid"] = input["aid"]
+    return item
 
 def cardToObj(input):
     if isinstance(input["card"], str):
@@ -26,11 +28,12 @@ def cardToObj(input):
     return getVideoItem(card)
 
 async def send_to_discord(cardObj):
-    async with aiohttp.ClientSession() as session:
-        webhook_message = {
-            "content": json.dumps(cardObj, ensure_ascii=False)
-        }
-        await session.post(webhook_url, json=webhook_message)
+    if cardObj:  # 只有當 cardObj 不是空字典時才發送
+        async with aiohttp.ClientSession() as session:
+            webhook_message = {
+                "content": json.dumps(cardObj, ensure_ascii=False)
+            }
+            await session.post(webhook_url, json=webhook_message)
 
 async def main():
     offset = 0
