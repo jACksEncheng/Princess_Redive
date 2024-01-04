@@ -15,7 +15,6 @@ u = user.User(uid=uid)
 def getVideoItem(input):
     return {
         "title": input.get("title", ""),
-        "desc": input.get("desc", ""),
         "aid": input.get("aid", "")
     }
 
