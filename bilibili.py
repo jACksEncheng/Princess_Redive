@@ -1,4 +1,3 @@
-import os
 import asyncio
 import json
 from bilibili_api import user
@@ -12,46 +11,16 @@ uid = 33383193  # 請將此處替換為實際的 UID
 
 u = user.User(uid=uid)
 
-def copyKeys(src, keys):
-    res = {}
-    for k in keys:
-        if k in src:
-            res[k] = src[k]
-    return res
-
-def getItem(input):
-    if "item" in input:
-        return getItem(input["item"])
-    if "videos" in input:
-        return getVideoItem(input)
-    else:
-        return getNormal(input)
-
-def getNormal(input):
-    res = copyKeys(input, ['description', 'pictures', 'content'])
-    if "pictures" in res:
-        res["pictures"] = [pic["img_src"] for pic in res["pictures"]]
-    return res
-
 def getVideoItem(input):
-    res = copyKeys(input, ['title', 'desc', 'dynamic', 'short_link', 'stat', 'tname'])
-    res["av"] = input["aid"]
-    res["pictures"] = [input["pic"]]
-    return res
+    return {
+        "title": input.get("title", ""),
+        "desc": input.get("desc", ""),
+        "aid": input.get("aid", "")
+    }
 
 def cardToObj(input):
-    res = {
-        "dynamic_id": input["desc"]["dynamic_id"],
-        "timestamp": input["desc"]["timestamp"],
-        "type": input["desc"]["type"],
-        "item": getItem(input["card"])
-    }
-    if "origin" in input["card"]:
-        originObj = json.loads(input["card"]["origin"])
-        res["origin"] = getItem(originObj)
-        if "user" in originObj and "name" in originObj["user"]:
-            res["origin_user"] = originObj["user"]["name"]
-    return res
+    card = json.loads(input["card"])
+    return getVideoItem(card)
 
 async def send_to_discord(cardObj):
     async with aiohttp.ClientSession() as session:
