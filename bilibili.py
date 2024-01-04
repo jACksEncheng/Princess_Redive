@@ -5,7 +5,7 @@ from bilibili_api import user
 import aiohttp
 
 # Discord Webhook URL
-webhook_url = os.getenv('DISCORD_WEBHOOK_URL')  # 請將此處替換為您的 Discord Webhook URL
+webhook_url = os.getenv('DISCORD_WEBHOOK_TEST')  # TEST是呱呱專案，URL是測試
 
 # Bilibili 用戶的 UID
 uid = 33383193  # 請將此處替換為實際的 UID
