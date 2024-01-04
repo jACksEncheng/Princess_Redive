@@ -44,15 +44,25 @@ async def send_to_discord(cardObj):
 
 async def main():
     offset = 0
+    # 發送最新的3筆資料
+    # ----- 修改開始 -----
+    max_posts = 3  # 最大發送數量
+    count = 0  # 初始化計數器
+    # ----- 修改結束 -----
     while True:
         res = await u.get_dynamics(offset)
-        if res["has_more"] != 1:
+        if res["has_more"] != 1 or count >= max_posts:
             break
         offset = res["next_offset"]
         for card in res["cards"]:
+            if count >= max_posts:
+                break  # 如果已達到最大發送數量，則中斷迴圈
             cardObj = cardToObj(card)
             await send_to_discord(cardObj)
-        await asyncio.sleep(1)
+            count += 1  # 發送成功後計數器加1
+        if count >= max_posts:
+            break  # 如果已發送指定數量的動態，終止主迴圈
+        await asyncio.sleep(1)  # 等待1秒以避免被限速
 
 if __name__ == '__main__':
     asyncio.get_event_loop().run_until_complete(main())
