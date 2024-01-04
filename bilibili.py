@@ -48,7 +48,7 @@ async def main():
     # ----- 修改開始 -----
     max_posts = 3  # 最大發送數量
     count = 0  # 初始化計數器
-    keyword = "公主連結"  # 指定的關鍵詞
+    keyword = "公主连结"  # 指定的關鍵詞
     # ----- 修改結束 -----
     while True:
         res = await u.get_dynamics(offset)
