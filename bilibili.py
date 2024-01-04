@@ -18,7 +18,6 @@ def getVideoItem(input, timestamp):
     if aid := input.get("aid"):
         item["aid"] = aid
         item["url"] = f"https://www.bilibili.com/video/av{aid}"
-    # 將 timestamp 轉換為台灣時間（UTC+8）
     dt = datetime.fromtimestamp(timestamp, tz=timezone(timedelta(hours=8)))
     item["timestamp"] = dt.strftime('%Y-%m-%d %H:%M:%S')
     return item
@@ -29,12 +28,13 @@ def cardToObj(card_data):
     return getVideoItem(card, timestamp)
 
 async def send_to_discord(cardObj):
-    if cardObj:
+    # 檢查所有必需的參數是否存在
+    if cardObj and all(key in cardObj for key in ['title', 'url', 'timestamp']):
         async with aiohttp.ClientSession() as session:
             discord_message = {
-                "content": f"Title: {cardObj.get('title', 'No Title')}\n"
-                           f"URL: {cardObj.get('url', 'No URL')}\n"
-                           f"Timestamp: {cardObj.get('timestamp', 'No Timestamp')}"
+                "content": f"Title: {cardObj['title']}\n"
+                           f"URL: {cardObj['url']}\n"
+                           f"Timestamp: {cardObj['timestamp']}"
             }
             response = await session.post(webhook_url, json=discord_message)
             if response.status == 200:
