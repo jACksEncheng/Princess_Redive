@@ -39,6 +39,7 @@ jobs:
         pip install requests google-api-python-client discord.py
         pip install bilibili-api-python
         pip install bilibili_api requests
+        pip install aiohttp
         
 
     - name: Run script
