@@ -20,7 +20,10 @@ def getVideoItem(input):
     }
 
 def cardToObj(input):
-    card = json.loads(input["card"])
+    if isinstance(input["card"], str):
+        card = json.loads(input["card"])
+    else:
+        card = input["card"]
     return getVideoItem(card)
 
 async def send_to_discord(cardObj):
