@@ -2,11 +2,6 @@ name: Bilibili Video Check
 
 on:
 
-  schedule:
-     - cron: '10 0 21-29 * *'
-     - cron: '45 12 21-29 * *'
-     
-
   workflow_dispatch: {}
 
 jobs:
@@ -40,6 +35,8 @@ jobs:
         pip install bilibili-api-python
         pip install bilibili_api requests
         pip install aiohttp
+        pip install asyncio
+        pip install json
         
 
     - name: Run script
