@@ -9,7 +9,7 @@ from datetime import datetime, timezone, timedelta
 webhook_url = os.getenv('DISCORD_WEBHOOK_URL')  # 請將此處替換為您的 Discord Webhook URL
 
 # Bilibili 用戶的 UID 列表
-uids = [33383193, 3254764]  # 請將這些數字替換為實際的 UID
+uids = [33383193, 3254764,3344722,95743190]  # 請將這些數字替換為實際的 UID
 
 def getVideoItem(input, timestamp):
     item = {}
