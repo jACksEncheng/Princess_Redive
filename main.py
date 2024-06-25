@@ -38,7 +38,7 @@ def post_to_discord(channel_name, video_title, video_url):
     requests.post(DISCORD_WEBHOOK_URL, data=data)
 
 # 這裡填入要監控的YouTube頻道ID和關鍵字
-CHANNEL_IDS = ['UCxH2mFGJOqJ15UyCiZ7rN9w', 'UCpI7QnTiStXbCB3_Qnx96Tg','UCvN59KwVSCv0KaAUuAYyUew','UClu2SdimbmQCzSrlBSzLXSg','UCLDeAj5mc1yhiWyUXQ3gxLg']
+CHANNEL_IDS = ['UCxH2mFGJOqJ15UyCiZ7rN9w', 'UCpI7QnTiStXbCB3_Qnx96Tg','UCvN59KwVSCv0KaAUuAYyUew','UClu2SdimbmQCzSrlBSzLXSg','UCLDeAj5mc1yhiWyUXQ3gxLg','UClu2SdimbmQCzSrlBSzLXSg','UC6bVPRmwuNS7NC0AjkGpJAA','UCMUMvpp2o4jvP5kYovDOu9w']
 KEYWORDS = ['戰隊戰']
 
 for channel_id in CHANNEL_IDS:
