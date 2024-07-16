@@ -2,9 +2,9 @@ name: YouTube Video Checker
 
 on:
 
-  schedule:
-     - cron: '10 0 21-29 * *'
-     - cron: '45 12 21-29 * *'
+#  schedule:
+#     - cron: '10 0 21-29 * *'
+#     - cron: '45 12 21-29 * *'
      
 
   workflow_dispatch: {}
